@@ -24,14 +24,8 @@ echo "Installing GNU Compiler Collection and dependencies ..."
   successfully brew tap homebrew/dupes
   successfully brew install coreutils
 
-echo "Installing git ..."
-  successfully brew install git
-
-echo "Installing node.js, a good JavaScript application framework ..."
-  successfully brew install node
-
-echo "Installing Z Script, for quick access to recently used projects from the terminal ..."
-  successfully brew install z
+echo "Installing git, Node.js, Z Script ..."
+  successfully brew install git node z
 
 echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   successfully npm install -g yo grunt-cli bower
