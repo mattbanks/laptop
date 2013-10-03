@@ -50,8 +50,8 @@ fancy_echo "Installing GNU Compiler Collection and dependencies ..."
   brew tap homebrew/dupes
   brew install coreutils
 
-fancy_echo "Installing git, Node.js, Z Script ..."
-  brew install git vim node hub z zsh mysql openssl
+fancy_echo "Installing git, Node.js, Z Script, MySQL ..."
+  brew install git node z mysql
 
 fancy_echo "Installing PHP 5.4 ..."
   brew tap josegonzalez/homebrew-php
@@ -60,12 +60,12 @@ fancy_echo "Installing PHP 5.4 ..."
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
 
-  if ! grep -qs "rbenv init" ~/.zshrc; then
-    echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+  # if ! grep -qs "rbenv init" ~/.zshrc; then
+  #   echo 'eval "$(rbenv init -)"' >> ~/.zshrc
 
-    fancy_echo "Enable shims and autocompletion ..."
-      eval "$(rbenv init -)"
-  fi
+  #   fancy_echo "Enable shims and autocompletion ..."
+  #     eval "$(rbenv init -)"
+  # fi
 
   source ~/.zshrc
 
@@ -92,3 +92,11 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
 
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower
+
+fancy_echo "Starting Apache ..."
+  sudo apachectl start
+
+fancy_echo "Linking MySQL ..."
+  mkdir -p ~/Library/LaunchAgents
+  ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+  launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
