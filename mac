@@ -30,7 +30,7 @@ fancy_echo "Installing Homebrew, a good OS X package manager ..."
 
 fancy_echo "Installing GNU Compiler Collection and dependencies ..."
   brew tap homebrew/dupes
-  brew install coreutils openssl
+  brew install coreutils autoconf openssl vim zsh
 
 fancy_echo "Installing git, Node.js, Z Script ..."
   brew install git node z
@@ -46,6 +46,7 @@ fancy_echo "Installing ruby-build, to install Rubies ..."
 
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
   rbenv install 2.0.0-p247
+  source ~/.zshrc
 
 fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
   rbenv global 2.0.0-p247
