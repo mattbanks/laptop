@@ -7,23 +7,19 @@
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
-### end common-components/exit-trap
 
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
-### end common-components/check-home-bin
 
 fancy_echo() {
   printf "\n%b\n" "$1"
 }
-### end common-components/shared-functions
 
 if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
     sudo mv /etc/{zshenv,zshrc}
 fi
-### end mac-components/zsh-fix
 
 echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
@@ -31,7 +27,6 @@ echo "Checking for SSH key, generating one if it doesn't exist ..."
 fancy_echo "Installing Homebrew, a good OS X package manager ..."
   ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
   brew update
-### end mac-components/homebrew
 
 fancy_echo "Installing GNU Compiler Collection and dependencies ..."
   brew tap homebrew/dupes
@@ -39,10 +34,6 @@ fancy_echo "Installing GNU Compiler Collection and dependencies ..."
 
 fancy_echo "Installing git, Node.js, Z Script ..."
   brew install git node z
-
-# fancy_echo "Installing PHP 5.4 ..."
-  # brew tap josegonzalez/homebrew-php
-  # brew install php54 php54-mcrypt php54-apc
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
@@ -52,7 +43,6 @@ fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up bina
 
 fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
-### end mac-components/rbenv
 
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
   rbenv install 2.0.0-p247
@@ -66,7 +56,6 @@ fancy_echo "Updating to latest Rubygems version ..."
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
   gem install bundler rails compass --no-document
-### end common-components/ruby-environment
 
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
