@@ -36,22 +36,14 @@ echo "Checking for SSH key, generating one if it doesn't exist ..."
 fancy_echo "Installing Homebrew, a good OS X package manager ..."
   ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
   brew update
-
-# if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
-#   fancy_echo "Put Homebrew location earlier in PATH ..."
-#     echo "\n# recommended by brew doctor" >> ~/.zshrc
-#     echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
-#     source ~/.zshrc
-# fi
-
 ### end mac-components/homebrew
 
 fancy_echo "Installing GNU Compiler Collection and dependencies ..."
   brew tap homebrew/dupes
-  brew install coreutils
+  brew install coreutils autoconf
 
 fancy_echo "Installing git, Node.js, Z Script, MySQL ..."
-  brew install git node z mysql
+  brew install git node z mysql openssl
 
 fancy_echo "Installing PHP 5.4 ..."
   brew tap josegonzalez/homebrew-php
@@ -59,14 +51,6 @@ fancy_echo "Installing PHP 5.4 ..."
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
-
-  # if ! grep -qs "rbenv init" ~/.zshrc; then
-  #   echo 'eval "$(rbenv init -)"' >> ~/.zshrc
-
-  #   fancy_echo "Enable shims and autocompletion ..."
-  #     eval "$(rbenv init -)"
-  # fi
-
   source ~/.zshrc
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
@@ -91,12 +75,4 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
 ### end common-components/ruby-environment
 
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
-  npm install -g yo grunt-cli bower
-
-fancy_echo "Starting Apache ..."
-  sudo apachectl start
-
-fancy_echo "Linking MySQL ..."
-  mkdir -p ~/Library/LaunchAgents
-  ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
-  launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+  npm install -g yo grunt-cli bower npm-check-updates
