@@ -46,7 +46,6 @@ fancy_echo "Installing git, Node.js, Z Script ..."
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
-  source ~/.zshrc
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   brew install rbenv-gem-rehash
