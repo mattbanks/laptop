@@ -12,11 +12,6 @@ set -e
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
-
-if [[ ":$PATH:" != *":$HOME/.bin:"* ]]; then
-  echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
-  source ~/.zshrc
-fi
 ### end common-components/check-home-bin
 
 fancy_echo() {
@@ -40,10 +35,10 @@ fancy_echo "Installing Homebrew, a good OS X package manager ..."
 
 fancy_echo "Installing GNU Compiler Collection and dependencies ..."
   brew tap homebrew/dupes
-  brew install coreutils autoconf
+  brew install coreutils autoconf openssl
 
 fancy_echo "Installing git, Node.js, Z Script, MySQL ..."
-  brew install git node z mysql openssl
+  brew install git node z mysql
 
 fancy_echo "Installing PHP 5.4 ..."
   brew tap josegonzalez/homebrew-php
