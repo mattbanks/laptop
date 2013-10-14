@@ -62,7 +62,7 @@ fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing critical Ruby gems for Rails development ..."
-  gem install bundler rails compass --no-document
+  gem install bundler rails compass bourbon neat --no-document
 
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
