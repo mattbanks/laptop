@@ -35,13 +35,9 @@ fancy_echo "Installing GNU Compiler Collection and dependencies ..."
 fancy_echo "Installing git, Node.js, Z Script ..."
   brew install git node z
 
-# fancy_echo "Installing PHP 5.4 ..."
-#   brew tap josegonzalez/homebrew-php
-#   brew install php54 php54-mcrypt php54-apc
-
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
-  exec zsh
+  source ~/.zshrc
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   brew install rbenv-gem-rehash
@@ -51,12 +47,12 @@ fancy_echo "Installing ruby-build, to install Rubies ..."
 
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
   rbenv install 2.0.0-p247
-  exec zsh
+  source ~/.zshrc
 
 fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
   rbenv global 2.0.0-p247
   rbenv rehash
-  exec zsh
+  source ~/.zshrc
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
