@@ -30,14 +30,14 @@ fancy_echo "Installing Homebrew, a good OS X package manager ..."
 
 fancy_echo "Installing GNU Compiler Collection and dependencies ..."
   brew tap homebrew/dupes
-  brew install coreutils autoconf openssl vim zsh
+  brew install coreutils autoconf openssl zsh
 
-fancy_echo "Installing git, MySQL, Node.js, Z Script ..."
-  brew install git mysql node z
+fancy_echo "Installing git, Node.js, Z Script ..."
+  brew install git node z
 
-fancy_echo "Installing PHP 5.4 ..."
-  brew tap josegonzalez/homebrew-php
-  brew install php54 php54-mcrypt php54-apc
+# fancy_echo "Installing PHP 5.4 ..."
+#   brew tap josegonzalez/homebrew-php
+#   brew install php54 php54-mcrypt php54-apc
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
