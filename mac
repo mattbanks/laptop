@@ -37,8 +37,7 @@ fancy_echo "Installing git, Node.js, Z Script ..."
 
 fancy_echo "Installing Composer and WP-CLI"
   brew tap josegonzalez/homebrew-php
-  brew install composer
-  curl https://raw.github.com/wp-cli/wp-cli.github.com/master/installer.sh | bash
+  brew install composer wp-cli
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
