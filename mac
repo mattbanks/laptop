@@ -47,12 +47,10 @@ fancy_echo "Installing ruby-build, to install Rubies ..."
 
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
   rbenv install 2.0.0-p247
-  source ~/.zshrc
 
 fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
   rbenv global 2.0.0-p247
   rbenv rehash
-  source ~/.zshrc
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
