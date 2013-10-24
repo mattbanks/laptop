@@ -28,20 +28,20 @@ fancy_echo "Installing Homebrew, a good OS X package manager ..."
   ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
   brew update
 
-fancy_echo "Installing GNU Compiler Collection and dependencies ..."
+fancy_echo "Tap Homebrew dependencies ..."
   brew tap homebrew/dupes
-  brew install coreutils autoconf openssl
 
-fancy_echo "Installing git, Node.js, Z Script ..."
-  brew install git node z
+fancy_echo "Installing git, MySQL Node.js, Z Script ..."
+  brew install git mysql node z
 
 fancy_echo "Installing Composer and WP-CLI"
   brew tap josegonzalez/homebrew-php
+  brew install php55 php55-apcu php55-mycrpt
   brew install composer wp-cli
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
-  exec zsh
+  source ~/.zshrc
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   brew install rbenv-gem-rehash
@@ -51,12 +51,12 @@ fancy_echo "Installing ruby-build, to install Rubies ..."
 
 fancy_echo "Installing Ruby 2.0.0-p247 ..."
   rbenv install 2.0.0-p247
-  exec zsh
+  source ~/.zshrc
 
 fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
   rbenv global 2.0.0-p247
   rbenv rehash
-  exec zsh
+  source ~/.zshrc
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
@@ -67,31 +67,5 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
 
-fancy_echo "Clone and install dotfiles"
-  git clone https://github.com/mattbanks/dotfiles.git ~/.dotfiles
-  cd ~/.dotfiles
-  script/bootstrap
-  exec zsh
-
-fancy_echo "Install Source Code Pro Font"
-  fonts/copy
-
-fancy_echo "Setup iTerm2"
-  iterm2/setup
-
-fancy_echo "Setup Sublime Text 3"
-  sublime3/setup
-
-fancy_echo "Create Sites directory"
-  cd ~
-  mkdir ~/Sites
-
-fancy_echo "Setup hosts file to access Vagrant Dev Box"
-  sudo -- sh -c "echo \"\n##\n# Matt's hosts\n##\n192.168.204.72\tsites.whatup\n\" >> /etc/hosts"
-
 fancy_echo "Clone Vagrant box"
   git clone https://github.com/mattbanks/vagrant-dev-box.git ~/vmdevbox
-
-fancy_echo "Setup OSX defaults"
-  cd ~/.dotfiles
-  osx/set-defaults.sh
