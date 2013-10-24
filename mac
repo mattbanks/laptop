@@ -59,8 +59,5 @@ fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
 
-fancy_echo "Setting up hosts file ..."
-  cat /etc/hosts | grep sites.whatup || sudo printf "\n##\n# Matt's hosts\n##\n192.168.56.101 sites.whatup\n" | sudo tee -a /etc/hosts
-
 fancy_echo "Cloning Vagrant dev box ..."
   git clone https://github.com/mattbanks/vagrant-dev-box.git ~/vmdevbox
