@@ -8,19 +8,17 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
-fancy_echo() {
-  printf "\n%b\n" "$1"
-}
-
 if [ ! -d "$HOME/.bin/" ]; then
-  fancy_echo "Creating home .bin folder ..."
   mkdir "$HOME/.bin"
 fi
 
 if [ ! -d "$HOME/Sites/" ]; then
-  fancy_echo "Creating Sites folder ..."
   mkdir "$HOME/Sites"
 fi
+
+fancy_echo() {
+  printf "\n%b\n" "$1"
+}
 
 if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
@@ -36,12 +34,15 @@ fancy_echo "Installing Homebrew, a good OS X package manager ..."
 
 fancy_echo "Tap Homebrew dependencies ..."
   brew tap homebrew/dupes
+  brew install apple-gcc42 openssl
 
 fancy_echo "Installing git, Node.js, Z Script ..."
   brew install git node z
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
+  eval "$(rbenv init -)"
+  source ~/.zshrc
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   brew install rbenv-gem-rehash
@@ -55,9 +56,29 @@ fancy_echo "Installing Ruby 2.0.0-p247 ..."
 fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
   rbenv global 2.0.0-p247
   rbenv rehash
+  source ~/.zshrc
+
+fancy_echo "Updating to latest Rubygems version ..."
+  gem update --system
+
+fancy_echo "Installing critical Ruby gems for development ..."
+  gem install bundler compass bourbon neat --no-document
 
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
 
 fancy_echo "Cloning Vagrant dev box ..."
   git clone https://github.com/mattbanks/vagrant-dev-box.git ~/vmdevbox
+
+fancy_echo "Seting up hosts file ..."
+  sudo -- sh -c "echo \"\n##\n# Matt's hosts\n##\n192.168.56.101\tsites.whatup\n\" >> /etc/hosts"
+
+fancy_echo "Cloning and installing dotfiles ..."
+  git clone https://github.com/mattbanks/dotfiles.git ~/.dotfiles
+  cd ~/.dotfiles
+  script/bootstrap
+  fonts/copy
+  source ~/.zshrc
+  iterm2/setup
+  sublime3/setup
+  xcode/setup
