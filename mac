@@ -79,9 +79,8 @@ rm ~/.zshrc
 fancy_echo "Cloning and installing dotfiles ..."
   git clone https://github.com/mattbanks/dotfiles.git ~/.dotfiles
   cd ~/.dotfiles
-  script/bootstrap
   fonts/copy
-  source ~/.zshrc
   iterm2/setup
   sublime3/setup
   xcode/setup
+  script/bootstrap
