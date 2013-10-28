@@ -69,6 +69,13 @@ fancy_echo "Installing critical Ruby gems for development ..."
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
 
+fancy_echo "Installing Composer and moving it globally ..."
+  curl -sS https://getcomposer.org/installer | php
+  mv composer.phar /usr/local/bin/composer
+
+fancy_echo "Installing WP-CLI ..."
+  curl https://raw.github.com/wp-cli/wp-cli.github.com/master/installer.sh | bash
+
 # Get rid of zshrc and move on to the dotfiles
 rm ~/.zshrc
 
