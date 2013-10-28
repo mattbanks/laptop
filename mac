@@ -8,6 +8,7 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+# Touch a .zshrc file so we can source it later and not have the system fail
 touch ~/.zshrc
 
 if [ ! -d "$HOME/.bin/" ]; then
@@ -68,19 +69,12 @@ fancy_echo "Installing critical Ruby gems for development ..."
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
 
-fancy_echo "Cloning Vagrant dev box ..."
-  git clone https://github.com/mattbanks/vagrant-dev-box.git ~/vmdevbox
-
-fancy_echo "Seting up hosts file ..."
-  sudo -- sh -c "echo \"\n##\n# Matt's hosts\n##\n192.168.56.101\tsites.whatup\n\" >> /etc/hosts"
-
+# Get rid of zshrc and move on to the dotfiles
 rm ~/.zshrc
 
 fancy_echo "Cloning and installing dotfiles ..."
   git clone https://github.com/mattbanks/dotfiles.git ~/.dotfiles
   cd ~/.dotfiles
   fonts/copy
-  iterm2/setup
-  sublime3/setup
   xcode/setup
   script/bootstrap
