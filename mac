@@ -35,8 +35,9 @@ fancy_echo "Installing Homebrew, a good OS X package manager ..."
   ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
   brew update
 
-fancy_echo "Tap Homebrew dependencies ..."
+fancy_echo "Tapping and Installing Homebrew dependencies ..."
   brew tap homebrew/dupes
+  brew install autoconf openssl
 
 fancy_echo "Installing git, Node.js, Z Script ..."
   brew install git node z
