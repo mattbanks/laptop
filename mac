@@ -69,6 +69,12 @@ fancy_echo "Installing critical Ruby gems for development ..."
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
 
+fancy_echo "Cloning Vagrant dev box ..."
+  git clone https://github.com/mattbanks/vagrant-dev-box.git ~/vmdevbox
+
+fancy_echo "Seting up hosts file ..."
+  sudo -- sh -c "echo \"\n##\n# Matt's hosts\n##\n192.168.56.101\tsites.whatup\n\" >> /etc/hosts"
+
 fancy_echo "Installing Composer and moving it globally ..."
   curl -sS https://getcomposer.org/installer | php
   mv composer.phar /usr/local/bin/composer
