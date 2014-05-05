@@ -8,13 +8,17 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
-# Touch a .zshrc file so we can source it later and not have the system fail
-touch ~/.zshrc
-
-if [ ! -d "$HOME/.bin/" ]; then
+# Create ~/.bin if it doesn't exist
+if [[ ! -d "$HOME/.bin/" ]]; then
   mkdir "$HOME/.bin"
 fi
 
+# Create ~/.zshrc if it doesn't exist
+if [ ! -f "$HOME/.zshrc" ]; then
+  touch $HOME/.zshrc
+fi
+
+# Create ~/Sites if it doesn't exist
 if [ ! -d "$HOME/Sites/" ]; then
   mkdir "$HOME/Sites"
 fi
@@ -22,6 +26,10 @@ fi
 fancy_echo() {
   printf "\n%b\n" "$1"
 }
+
+# Create shell to zsh
+fancy_echo "Changing your shell to zsh ..."
+  chsh -s $(which zsh)
 
 if [[ -f /etc/zshenv ]]; then
   fancy_echo "Fixing OSX zsh environment bug ..."
@@ -32,19 +40,17 @@ echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
 fancy_echo "Installing Homebrew, a good OS X package manager ..."
-  ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+  ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/homebrew/go/install)
+
+fancy_echo "Updating Homebrew formulas ..."
   brew update
 
-fancy_echo "Tap Homebrew dependencies ..."
-  brew tap homebrew/dupes
-
-fancy_echo "Installing git, Node.js, Z Script ..."
-  brew install git node z
+fancy_echo "Installing git, Node.js, Z Script, GitHub CLI ..."
+  brew install git node z hub
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
   eval "$(rbenv init -)"
-  source ~/.zshrc
 
 fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
   brew install rbenv-gem-rehash
@@ -52,41 +58,30 @@ fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up bina
 fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
 
-fancy_echo "Installing Ruby 2.0.0-p247 ..."
-  rbenv install 2.0.0-p247
+fancy_echo "Installing Ruby 2.1.1 ..."
+  rbenv install 2.1.1
 
-fancy_echo "Setting Ruby 2.0.0-p247 as global default Ruby ..."
-  rbenv global 2.0.0-p247
+fancy_echo "Setting Ruby 2.1.1 as global default Ruby ..."
+  rbenv global 2.1.1
   rbenv rehash
-  source ~/.zshrc
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing critical Ruby gems for development ..."
-  gem install bundler compass bourbon neat --no-document
+  gem install bundler sass --no-document
 
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
 
 fancy_echo "Cloning Vagrant dev box ..."
-  git clone https://github.com/mattbanks/vagrant-dev-box.git ~/vmdevbox
-
-fancy_echo "Seting up hosts file ..."
-  sudo -- sh -c "echo \"\n##\n# Matt's hosts\n##\n192.168.56.101\tsites.whatup\n\" >> /etc/hosts"
-
-# fancy_echo "Installing Composer and moving it globally ..."
-#   curl -sS https://getcomposer.org/installer | php
-#   mv composer.phar /usr/local/bin/composer
-
-# fancy_echo "Installing WP-CLI ..."
-#   curl https://raw.github.com/wp-cli/wp-cli.github.com/master/installer.sh | bash
+  hub clone vvv ~/vvv
 
 # Get rid of zshrc and move on to the dotfiles
 rm ~/.zshrc
 
 fancy_echo "Cloning and installing dotfiles ..."
-  git clone https://github.com/mattbanks/dotfiles.git ~/.dotfiles
+  hub clone dotfiles ~/.dotfiles
   cd ~/.dotfiles
   fonts/copy
   script/bootstrap
