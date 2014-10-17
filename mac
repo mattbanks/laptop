@@ -42,46 +42,41 @@ echo "Checking for SSH key, generating one if it doesn't exist ..."
 fancy_echo "Installing Homebrew, a good OS X package manager ..."
   ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/homebrew/go/install)
 
+if ! command -v brew &>/dev/null; then
+  fancy_echo "Installing Homebrew, a good OS X package manager ..."
+    ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/homebrew/go/install)
+else
+  fancy_echo "Homebrew already installed. Skipping ..."
+fi
+
 fancy_echo "Updating Homebrew formulas ..."
   brew update
 
-fancy_echo "Installing git, Node.js, Z Script, GitHub CLI ..."
-  brew install git node z hub
-
-fancy_echo "Installing rbenv, to change Ruby versions ..."
-  brew install rbenv
-  eval "$(rbenv init -)"
-
-fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  brew install rbenv-gem-rehash
-
-fancy_echo "Installing ruby-build, to install Rubies ..."
-  brew install ruby-build
-
-fancy_echo "Installing Ruby 2.1.1 ..."
-  rbenv install 2.1.1
-
-fancy_echo "Setting Ruby 2.1.1 as global default Ruby ..."
-  rbenv global 2.1.1
-  rbenv rehash
+fancy_echo "Installing Node.js, Z Script ..."
+  brew install node z
 
 fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
+  sudo gem update --system
 
 fancy_echo "Installing critical Ruby gems for development ..."
-  gem install bundler sass --no-document
+  sudo gem install sass compass
 
-fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
+fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman, Bower, Gulp and NPM Check Updates because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
 
 fancy_echo "Cloning Vagrant dev box ..."
-  hub clone vvv ~/vvv
+  git clone git@github.com:mattbanks/VVV.git ~/vvv
+
+fancy_echo "Installing WP-CLI"
+  curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+  chmod +x wp-cli.phar
+  sudo mv wp-cli.phar /usr/local/bin/wp
 
 # Get rid of zshrc and move on to the dotfiles
 rm ~/.zshrc
 
 fancy_echo "Cloning and installing dotfiles ..."
-  hub clone dotfiles ~/.dotfiles
+  git clone git@github.com:mattbanks/dotfiles.git ~/.dotfiles
   cd ~/.dotfiles
   fonts/copy
   script/bootstrap
