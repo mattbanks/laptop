@@ -39,9 +39,6 @@ fi
 echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
-fancy_echo "Installing Homebrew, a good OS X package manager ..."
-  ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/homebrew/go/install)
-
 if ! command -v brew &>/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
     ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/homebrew/go/install)
@@ -59,7 +56,7 @@ fancy_echo "Updating to latest Rubygems version ..."
   sudo gem update --system
 
 fancy_echo "Installing critical Ruby gems for development ..."
-  sudo gem install sass compass
+  sudo gem install sass
 
 fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman, Bower, Gulp and NPM Check Updates because you need them ..."
   npm install -g yo grunt-cli bower npm-check-updates
