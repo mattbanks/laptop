@@ -62,11 +62,11 @@ fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up bina
 fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
 
-fancy_echo "Installing Ruby 2.1.1 ..."
-  rbenv install 2.1.1
+fancy_echo "Installing Ruby 2.1.5 ..."
+  rbenv install 2.1.5
 
-fancy_echo "Setting Ruby 2.1.1 as global default Ruby ..."
-  rbenv global 2.1.1
+fancy_echo "Setting Ruby 2.1.5 as global default Ruby ..."
+  rbenv global 2.1.5
   rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
