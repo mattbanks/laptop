@@ -23,6 +23,11 @@ if [ ! -d "$HOME/Sites/" ]; then
   mkdir "$HOME/Sites"
 fi
 
+# Create ~/Code if it doesn't exist
+if [ ! -d "$HOME/Code/" ]; then
+  mkdir "$HOME/Code"
+fi
+
 fancy_echo() {
   printf "\n%b\n" "$1"
 }
@@ -49,8 +54,8 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
   brew update
 
-fancy_echo "Installing git, Node.js, Z Script, GitHub CLI ..."
-  brew install git node z hub
+fancy_echo "Installing git, Node.js, Z Script, VVV Site Setup ..."
+  brew install git node z vv
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
@@ -62,24 +67,24 @@ fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up bina
 fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
 
-fancy_echo "Installing Ruby 2.1.5 ..."
-  rbenv install 2.1.5
+fancy_echo "Installing Ruby 2.2.2 ..."
+  rbenv install 2.22.2
 
-fancy_echo "Setting Ruby 2.1.5 as global default Ruby ..."
-  rbenv global 2.1.5
+fancy_echo "Setting Ruby 2.2.2 as global default Ruby ..."
+  rbenv global 2.22.2
   rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing critical Ruby gems for development ..."
-  gem install bundler sass --no-document
+  gem install bundler sass
 
-fancy_echo "Installing Essential NPM Packages - Grunt, Yeoman and Bower, because you need them ..."
-  npm install -g yo grunt-cli bower npm-check-updates
+fancy_echo "Installing Essential NPM Packages ..."
+  npm install -g yo grunt-cli bower gulp jshint npm-check-updates
 
 fancy_echo "Cloning Vagrant dev box ..."
-  hub clone vvv ~/vvv
+  git clone git@github.com:Varying-Vagrant-Vagrants/VVV.git ~/vvv
 
 fancy_echo "Installing WP-CLI"
   curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
