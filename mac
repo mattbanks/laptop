@@ -78,6 +78,10 @@ fancy_echo "Installing critical Ruby gems for development ..."
 fancy_echo "Installing Essential NPM Packages ..."
   npm install -g yo bower grunt-cli gulp jshint eslint xo npm-check-updates
 
+fancy_echo "Installing Composer ..."
+  curl -sS https://getcomposer.org/installer | php
+  mv composer.phar /usr/local/bin/composer
+
 fancy_echo "Cloning VVV dev box ..."
   git clone git@github.com:mattbanks/VVV.git ~/vvv
 
