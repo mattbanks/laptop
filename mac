@@ -18,11 +18,6 @@ if [ ! -f "$HOME/.zshrc" ]; then
   touch $HOME/.zshrc
 fi
 
-# Create ~/Sites if it doesn't exist
-if [ ! -d "$HOME/Sites/" ]; then
-  mkdir "$HOME/Sites"
-fi
-
 # Create ~/Code if it doesn't exist
 if [ ! -d "$HOME/Code/" ]; then
   mkdir "$HOME/Code"
@@ -46,7 +41,7 @@ echo "Checking for SSH key, generating one if it doesn't exist ..."
 
 if ! command -v brew &>/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
-    ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/homebrew/go/install)
+    ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/master/install)
 else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
@@ -67,35 +62,29 @@ fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up bina
 fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
 
-fancy_echo "Installing Ruby 2.2.2 ..."
-  rbenv install 2.22.2
+fancy_echo "Installing Ruby 2.2.3 ..."
+  rbenv install 2.2.3
 
-fancy_echo "Setting Ruby 2.2.2 as global default Ruby ..."
-  rbenv global 2.22.2
+fancy_echo "Setting Ruby 2.2.3 as global default Ruby ..."
+  rbenv global 2.2.3
   rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing critical Ruby gems for development ..."
-  gem install bundler sass
+  gem install bundler sass scss_lint
 
 fancy_echo "Installing Essential NPM Packages ..."
-  npm install -g yo grunt-cli bower gulp jshint npm-check-updates
+  npm install -g yo bower grunt-cli gulp jshint eslint xo npm-check-updates
 
-fancy_echo "Cloning Vagrant dev box ..."
-  git clone git@github.com:Varying-Vagrant-Vagrants/VVV.git ~/vvv
-
-fancy_echo "Installing WP-CLI"
-  curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-  chmod +x wp-cli.phar
-  sudo mv wp-cli.phar /usr/local/bin/wp
+fancy_echo "Cloning VVV dev box ..."
+  git clone git@github.com:mattbanks/VVV.git ~/vvv
 
 # Get rid of zshrc and move on to the dotfiles
 rm ~/.zshrc
 
 fancy_echo "Cloning and installing dotfiles ..."
-  hub clone dotfiles ~/.dotfiles
+  git clone git@github.com:mattbanks/dotfiles.git ~/.dotfiles
   cd ~/.dotfiles
-  fonts/copy
   script/bootstrap
