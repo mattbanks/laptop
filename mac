@@ -72,9 +72,6 @@ fancy_echo "Setting Ruby 2.2.3 as global default Ruby ..."
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
-fancy_echo "Installing critical Ruby gems for development ..."
-  gem install bundler sass scss_lint
-
 fancy_echo "Installing Essential NPM Packages ..."
   npm install -g yo bower grunt-cli gulp jshint eslint xo npm-check-updates
 
