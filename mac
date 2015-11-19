@@ -73,7 +73,7 @@ fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing Essential NPM Packages ..."
-  npm install -g yo bower grunt-cli gulp jshint eslint xo npm-check-updates
+  npm install -g yo bower grunt-cli gulp jshint eslint xo npm-check-updates n node-inspector
 
 fancy_echo "Installing Composer ..."
   curl -sS https://getcomposer.org/installer | php
