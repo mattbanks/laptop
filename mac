@@ -49,8 +49,16 @@ fi
 fancy_echo "Updating Homebrew formulas ..."
   brew update
 
-fancy_echo "Installing git, Node.js, Z Script, VVV Site Setup ..."
-  brew install git node z vv
+fancy_echo "Installing homebrew packages ..."
+  brew install git z vv zsh-syntax-highlighting
+
+fancy_echo "Installing docker packages ..."
+  brew install docker docker-compose docker-machine docker-swarm
+
+fancy_echo "Installing Node via n with latest and lts ..."
+  brew install n
+  n lts
+  n latest
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
@@ -62,22 +70,18 @@ fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up bina
 fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
 
-fancy_echo "Installing Ruby 2.2.3 ..."
-  rbenv install 2.2.3
+fancy_echo "Installing Ruby 2.3.0 ..."
+  rbenv install 2.3.0
 
-fancy_echo "Setting Ruby 2.2.3 as global default Ruby ..."
-  rbenv global 2.2.3
+fancy_echo "Setting Ruby 2.3.0 as global default Ruby ..."
+  rbenv global 2.3.0
   rbenv rehash
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing Essential NPM Packages ..."
-  npm install -g yo bower grunt-cli gulp jshint eslint xo npm-check-updates n node-inspector
-
-fancy_echo "Installing Composer ..."
-  curl -sS https://getcomposer.org/installer | php
-  mv composer.phar /usr/local/bin/composer
+  npm install -g bower eslint grunt-cli gulp jshint node-inspector npm-check-updates xo yo
 
 fancy_echo "Cloning VVV dev box ..."
   git clone git@github.com:mattbanks/VVV.git ~/vvv
