@@ -8,6 +8,9 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
+# Make sure we have Xcode command line tools
+xcode-select --install
+
 # Create ~/.bin if it doesn't exist
 if [[ ! -d "$HOME/.bin/" ]]; then
   mkdir "$HOME/.bin"
@@ -96,3 +99,10 @@ fancy_echo "Cloning and installing dotfiles ..."
   git clone git@github.com:mattbanks/dotfiles.git ~/.dotfiles
   cd ~/.dotfiles
   script/bootstrap
+
+fancy_echo "Installing Atom packages"
+  apm stars --install
+
+fancy_echo "Installing Xcode color scheme"
+  cd ~/.dotfiles
+  xcode/setup
