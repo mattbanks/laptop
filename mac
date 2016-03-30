@@ -41,7 +41,7 @@ echo "Checking for SSH key, generating one if it doesn't exist ..."
 
 if ! command -v brew &>/dev/null; then
   fancy_echo "Installing Homebrew, a good OS X package manager ..."
-    ruby <(curl -fsS https://raw.githubusercontent.com/Homebrew/install/master/install)
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
@@ -50,7 +50,7 @@ fancy_echo "Updating Homebrew formulas ..."
   brew update
 
 fancy_echo "Installing homebrew packages ..."
-  brew install git z zsh-syntax-highlighting
+  brew install git z zsh-syntax-highlighting awscli heroku-toolbest
 
 fancy_echo "Installing docker packages ..."
   brew install docker docker-compose docker-machine docker-swarm
@@ -63,9 +63,6 @@ fancy_echo "Installing Node via n with latest and lts ..."
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
   eval "$(rbenv init -)"
-
-fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
-  brew install rbenv-gem-rehash
 
 fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
@@ -81,7 +78,12 @@ fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing Essential NPM Packages ..."
-  npm install -g bower eslint grunt-cli gulp jshint node-inspector npm-check-updates xo yo
+  npm install -g eslint gulp jshint node-inspector npm-check-updates xo
+
+fancy_echo "Installing Casks"
+  brew cask install font-hack font-source-code-pro virtualbox vagrant
+  brew cask install qlmarkdown qlcolorcode qlstephen quicklook-json qlimagesize
+  brew cask install imageoptim macdown postman vlc
 
 fancy_echo "Cloning VVV dev box, install vv"
   git clone git@github.com:mattbanks/VVV.git ~/vvv
