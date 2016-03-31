@@ -81,7 +81,7 @@ fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
 
 fancy_echo "Installing Essential NPM Packages ..."
-  npm install -g eslint gulp jshint node-inspector npm-check-updates xo
+  npm install -g eslint gulp jshint node-inspector npm-check-updates pure-prompt xo
 
 fancy_echo "Installing Casks"
   brew cask install font-hack font-source-code-pro virtualbox vagrant
