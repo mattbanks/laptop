@@ -53,7 +53,7 @@ fancy_echo "Updating Homebrew formulas ..."
   brew update
 
 fancy_echo "Installing homebrew packages ..."
-  brew install git z zsh-syntax-highlighting awscli heroku-toolbest
+  brew install git z zsh-syntax-highlighting awscli heroku-toolbest go python
 
 fancy_echo "Installing docker packages ..."
   brew install docker docker-compose docker-machine docker-swarm
