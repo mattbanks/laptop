@@ -1,24 +1,29 @@
-#!/usr/bin/env zsh
+#!/bin/sh
 
-# Welcome to Matt's laptop script! Forked from thoughbot.
+# Welcome to Matt's laptop script, forked from thoughbot!
 # Be prepared to turn your laptop (or desktop, no haters here)
 # into an awesome development machine.
 
+fancy_echo() {
+  local fmt="$1"; shift
+
+  # shellcheck disable=SC2059
+  printf "\n$fmt\n" "$@"
+}
+
+# shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
-# Make sure we have Xcode command line tools
-xcode-select --install
-
 # Create ~/.bin if it doesn't exist
-if [[ ! -d "$HOME/.bin/" ]]; then
+if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
 # Create ~/.zshrc if it doesn't exist
 if [ ! -f "$HOME/.zshrc" ]; then
-  touch $HOME/.zshrc
+  touch "$HOME/.zshrc"
 fi
 
 # Create ~/Code if it doesn't exist
@@ -26,71 +31,64 @@ if [ ! -d "$HOME/Code/" ]; then
   mkdir "$HOME/Code"
 fi
 
-fancy_echo() {
-  printf "\n%b\n" "$1"
-}
-
 # Create shell to zsh
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s $(which zsh)
+case "$SHELL" in
+  */zsh) : ;;
+  *)
+    fancy_echo "Changing your shell to zsh ..."
+      chsh -s "$(which zsh)"
+    ;;
+esac
 
-if [[ -f /etc/zshenv ]]; then
-  fancy_echo "Fixing OSX zsh environment bug ..."
-    sudo mv /etc/{zshenv,zshrc}
-fi
-
-echo "Checking for SSH key, generating one if it doesn't exist ..."
+# Setup SSH public key if it doesn't exist
+fancy_echo "Checking for SSH key, generating one if it doesn't exist ..."
   [[ -f ~/.ssh/id_rsa.pub ]] || ssh-keygen -t rsa
 
-if ! command -v brew &>/dev/null; then
-  fancy_echo "Installing Homebrew, a good OS X package manager ..."
+# Setup Homebrew
+if ! command -v brew >/dev/null; then
+  fancy_echo "Installing Homebrew ..."
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-else
-  fancy_echo "Homebrew already installed. Skipping ..."
 fi
 
-fancy_echo "Updating Homebrew formulas ..."
-  brew update
+fancy_echo "Updating Homebrew formulae ..."
+brew update
+brew bundle --file=- <<EOF
+brew "awscli"
+brew "git"
+brew "go"
+brew "heroku-toolbelt"
+brew "n"
+brew "python"
+brew "rbenv"
+brew "ruby-build"
+brew "z"
+brew "zsh-syntax-highlighting"
+EOF
 
-fancy_echo "Installing homebrew packages ..."
-  brew install git z zsh-syntax-highlighting awscli heroku-toolbest go python
+fancy_echo "Configuring Ruby ..."
+find_latest_ruby() {
+  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
+}
+ruby_version="$(find_latest_ruby)"
+eval "$(rbenv init -)"
+if ! rbenv versions | grep -Fq "$ruby_version"; then
+  rbenv install "$ruby_version"
+fi
 
-fancy_echo "Installing docker packages ..."
-  brew install docker docker-compose docker-machine docker-swarm
+rbenv global "$ruby_version"
+rbenv shell "$ruby_version"
+gem update --system
 
-fancy_echo "Installing Node via n with latest and lts ..."
-  brew install n
-  n lts
-  n latest
-
-fancy_echo "Installing rbenv, to change Ruby versions ..."
-  brew install rbenv
-  eval "$(rbenv init -)"
-
-fancy_echo "Installing ruby-build, to install Rubies ..."
-  brew install ruby-build
-
-fancy_echo "Installing Ruby 2.3.0 ..."
-  rbenv install 2.3.0
-
-fancy_echo "Setting Ruby 2.3.0 as global default Ruby ..."
-  rbenv global 2.3.0
-  rbenv rehash
-
-fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
-
-fancy_echo "Installing Essential NPM Packages ..."
-  npm install -g eslint gulp jshint node-inspector npm-check-updates pure-prompt xo
+fancy_echo "Configuring Node ..."
+n lts
+n latest
+npm install -g npm
+npm install -g eslint gulp jshint node-inspector npm-check-updates pure-prompt xo yarn
 
 fancy_echo "Installing Casks"
   brew cask install caskroom/fonts/font-hack caskroom/fonts/font-source-code-pro
   brew cask install qlmarkdown qlcolorcode qlstephen quicklook-json qlimagesize
   brew cask install virtualbox vagrant
-
-fancy_echo "Cloning VVV dev box, install vv"
-  git clone git@github.com:mattbanks/VVV.git ~/vvv
-  brew install bradp/vv/vv
 
 # Get rid of zshrc and move on to the dotfiles
 rm ~/.zshrc
@@ -102,7 +100,3 @@ fancy_echo "Cloning and installing dotfiles ..."
 
 fancy_echo "Installing Atom packages"
   apm stars --install
-
-fancy_echo "Installing Xcode color scheme"
-  cd ~/.dotfiles
-  xcode/setup
