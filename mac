@@ -56,7 +56,7 @@ brew bundle --file=- <<EOF
 brew "awscli"
 brew "git"
 brew "go"
-brew "heroku-toolbelt"
+brew "heroku"
 brew "n"
 brew "python"
 brew "rbenv"
@@ -83,12 +83,11 @@ fancy_echo "Configuring Node ..."
 n lts
 n latest
 npm install -g npm
-npm install -g eslint gulp jshint node-inspector npm-check-updates pure-prompt xo yarn
+npm install -g eslint gulp jshint npm-check-updates pure-prompt xo yarn
 
 fancy_echo "Installing Casks"
   brew cask install caskroom/fonts/font-hack caskroom/fonts/font-source-code-pro
   brew cask install qlmarkdown qlcolorcode qlstephen quicklook-json qlimagesize
-  brew cask install virtualbox vagrant
 
 # Get rid of zshrc and move on to the dotfiles
 rm ~/.zshrc
